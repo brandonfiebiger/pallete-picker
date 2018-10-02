@@ -38,9 +38,10 @@ app.get('/api/v1/projects/:projectid/palletes/:palleteid', (request, response) =
   }
 });
 
-app.post('/api/v1/projects', (request, response) => {
+app.post('/api/v1/projects/new', (request, response) => {
   const id = app.locals.projects.length + 1;
-  const project = {id: id};
+  const { palletes, title } = request.body
+  const project = {id, title, palletes };
 
   app.locals.projects.push(project);
   response.status(201).json({project});
