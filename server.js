@@ -9,7 +9,7 @@ app.set('port', process.env.PORT || 3000);
 app.locals.title = 'Pallete Picker';
 
 app.locals.projects = [
-  {id: 1, title: 'Project 1', palletes: [{name: 'pallete 1', id: 2, colors: ['#000000', '#FFFFFF', '#f1f1f1', '#f2f2f2', '#f5f5f5']}]}
+  {id: 1, title: 'Project 1', palletes: [{name: 'pallete 1', id: 1, colors: ['#000000', '#FFFFFF', '#f1f1f1', '#f2f2f2', '#f5f5f5']}, {name: 'pallete 2', id: 2, colors: ['#000000', '#FFFFFF', '#f1f1f1', '#f2f2f2', '#f5f5f5']}, {name: 'pallete 3', id: 3, colors: ['#000000', '#FFFFFF', '#f1f1f1', '#f2f2f2', '#f5f5f5']}]}
 ];
 
 app.get('/api/v1/projects', (request, response) => {
@@ -36,7 +36,7 @@ app.get('/api/v1/projects/:projectid/palletes/:palleteid', (request, response) =
   } else {
     return response.status(404).json({error: 'Sorry that pallete does not exist'});
   }
-})
+});
 
 app.listen(3000, () => {
   console.log('Pallete Picker is running on port 3000');
