@@ -21,6 +21,15 @@ footer {
   width: 60vw;
   background: yellow;
   height: 80vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+article {
+  background: black;
+  height: 40rem;
+  width: 10rem;
 }
 
 .palletes {
