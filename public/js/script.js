@@ -43,9 +43,15 @@ window.onkeydown = function keyFunctions(e) {
   e.preventDefault();
   switch (e.keyCode) {
     case 32:
-    colors = generateFiveHexCodes()
+    colors = generateFiveHexCodes();
+    setRandomColorsToDom();
   }
 }
 
+const setRandomColorsToDom = () => {
+  for (let i = 0; i < colors.length + 1; i++) {
+    $(`.color${i}`).css('background-color', `${colors[i]}`);
+  }
+}
 
 
