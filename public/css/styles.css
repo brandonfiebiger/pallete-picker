@@ -1,0 +1,22 @@
+main {
+  display: flex;
+  flex-direction: row;
+}
+
+.projects {
+  width: 20vw;
+  background: red;
+  height: 80vh;
+}
+
+.colors {
+  width: 60vw;
+  background: yellow;
+  height: 80vh;
+}
+
+.palletes {
+  width: 20vw;
+  background: blue;
+  height: 80vh;
+}
