@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 
+app.use(bodyParser.json());
 
 app.use(express.static('public'));
 
@@ -41,10 +43,10 @@ app.get('/api/v1/projects/:projectid/palletes/:palleteid', (request, response) =
 app.post('/api/v1/projects/new', (request, response) => {
   const id = app.locals.projects.length + 1;
   const { palletes, title } = request.body
-  const project = {id, title, palletes };
+  const project = {id: id, title: title, palletes: palletes };
 
   app.locals.projects.push(project);
-  response.status(201).json({project});
+  response.status(201).json(project);
 })
 
 app.listen(3000, () => {
