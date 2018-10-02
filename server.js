@@ -38,6 +38,14 @@ app.get('/api/v1/projects/:projectid/palletes/:palleteid', (request, response) =
   }
 });
 
+app.post('/api/v1/projects', (request, response) => {
+  const id = app.locals.projects.length + 1;
+  const project = {id: id};
+
+  app.locals.projects.push(project);
+  response.status(201).json({project});
+})
+
 app.listen(3000, () => {
   console.log('Pallete Picker is running on port 3000');
 });
