@@ -11,7 +11,8 @@ app.set('port', process.env.PORT || 3000);
 app.locals.title = 'Pallete Picker';
 
 app.locals.projects = [
-  {id: 1, title: 'Project 1', palletes: [{name: 'pallete 1', id: 1, colors: ['#000000', '#FFFFFF', '#f1f1f1', '#f2f2f2', '#f5f5f5']}, {name: 'pallete 2', id: 2, colors: ['#000000', '#FFFFFF', '#f1f1f1', '#f2f2f2', '#f5f5f5']}, {name: 'pallete 3', id: 3, colors: ['#000000', '#FFFFFF', '#f1f1f1', '#f2f2f2', '#f5f5f5']}]}
+  {id: 1, title: 'Project 1', palletes: [{name: 'pallete 1', id: 1, colors: ['#000000', '#FFFFFF', '#f1f1f1', '#f2f2f2', '#f5f5f5']}, {name: 'pallete 2', id: 2, colors: ['#000000', '#FFFFFF', '#f1f1f1', '#f2f2f2', '#f5f5f5']}, {name: 'pallete 3', id: 3, colors: ['#000000', '#FFFFFF', '#f1f1f1', '#f2f2f2', '#f5f5f5']}]},
+  {id: 2, title: 'Project 1', palletes: [{name: 'pallete 1', id: 1, colors: ['#000000', '#FFFFFF', '#f1f1f1', '#f2f2f2', '#f5f5f5']}, {name: 'pallete 2', id: 2, colors: ['#000000', '#FFFFFF', '#f1f1f1', '#f2f2f2', '#f5f5f5']}, {name: 'pallete 3', id: 3, colors: ['#000000', '#FFFFFF', '#f1f1f1', '#f2f2f2', '#f5f5f5']}]}
 ];
 
 app.get('/api/v1/projects', (request, response) => {
@@ -47,6 +48,17 @@ app.post('/api/v1/projects/new', (request, response) => {
 
   app.locals.projects.push(project);
   response.status(201).json(project);
+})
+
+app.delete('/api/v1/projects/delete/:project_id', (request, response) => {
+  const project_id = request.params.project_id;
+  // if (project_id) {
+    const filteredProjects = app.locals.projects.filter(project => project.id != project_id);
+    app.locals.projects = filteredProjects;
+    response.status(201).json(project_id);
+  // } else {
+  //   response.status(404).json({error: 'Sorry that project does not exist'});
+  // }
 })
 
 app.listen(3000, () => {
