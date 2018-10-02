@@ -1,20 +1,22 @@
-// const randomHexColor = require('random-hex-color')
+// fetch('http://localhost:3000/api/v1/projects/new', {
+//   method: 'POST',
+//   body: JSON.stringify({
+//     title: 'hello',
+//     palletes: ['world']
+//   }),
+//   headers: {
+//     'Content-Type': 'application/json'
+//   }
+// })
+// .then(response => response.json())
+// .then(data => console.log(data))
+// .catch(error => console.log(error))
 
-fetch('http://localhost:3000/api/v1/projects/new', {
-  method: 'POST',
-  body: JSON.stringify({
-    title: 'hello',
-    palletes: ['world']
-  }),
-  headers: {
-    'Content-Type': 'application/json'
-  }
-})
-.then(response => response.json())
-.then(data => console.log(data))
-.catch(error => console.log(error))
+// fetch('http://localhost:3000/api/v1/projects/delete/1')
+//   .then(response => response.json())
+//   .then(data => console.log(data))
+//   .catch(error => console.log(error))
 
-// console.log(randomHexColor())
 
 const generateRandomHexCode = () => {
   const possibleDigits = "0123456789ABCDEF"; 
@@ -25,4 +27,25 @@ const generateRandomHexCode = () => {
   color.join('')
   return '#' + color.join('');
 }
+
+const generateFiveHexCodes = () => {
+  let colors = [];
+  for (let i = 0; i < 5; i++) {
+    const generatedColor = generateRandomHexCode();
+    colors.push(generatedColor);
+  }
+  return colors;
+}
+
+let colors = generateFiveHexCodes();
+
+window.onkeydown = function keyFunctions(e) {
+  e.preventDefault();
+  switch (e.keyCode) {
+    case 32:
+    colors = generateFiveHexCodes()
+  }
+}
+
+
 
