@@ -3,6 +3,14 @@ main {
   flex-direction: row;
 }
 
+header {
+  text-align: center;
+}
+
+footer {
+  text-align: center;
+}
+
 .projects {
   width: 20vw;
   background: red;
