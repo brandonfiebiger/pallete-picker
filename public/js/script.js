@@ -24,7 +24,6 @@ const generateRandomHexCode = () => {
   for (let i = 0; i < 6; i++) {
     color.push(possibleDigits[Math.floor(Math.random() * 16)]);
   }
-  color.join('')
   return '#' + color.join('');
 }
 
@@ -51,6 +50,9 @@ window.onkeydown = function keyFunctions(e) {
 const setRandomColorsToDom = () => {
   for (let i = 0; i < colors.length + 1; i++) {
     $(`.color${i}`).css('background-color', `${colors[i]}`);
+    $(`.color${i}`).text(() => {
+      return `${colors[i]}`
+    })
   }
 }
 
