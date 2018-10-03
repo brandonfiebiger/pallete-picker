@@ -60,16 +60,16 @@ app.post('/api/v1/projects/new', (request, response) => {
   response.status(201).json(project);
 })
 
-app.delete('/api/v1/projects/delete/:project_id', (request, response) => {
-  const project_id = request.params.project_id;
-  // if (project_id) {
-    const filteredProjects = app.locals.projects.filter(project => project.id != project_id);
-    app.locals.projects = filteredProjects;
-    response.status(201).json(project_id);
-  // } else {
-  //   response.status(404).json({error: 'Sorry that project does not exist'});
-  // }
-})
+// app.delete('/api/v1/projects/delete/:project_id', (request, response) => {
+//   const project_id = request.params.project_id;
+//   // if (project_id) {
+//     const filteredProjects = app.locals.projects.filter(project => project.id != project_id);
+//     app.locals.projects = filteredProjects;
+//     response.status(201).json(project_id);
+//   // } else {
+//   //   response.status(404).json({error: 'Sorry that project does not exist'});
+//   // }
+// })
 
 app.listen(3000, () => {
   console.log('Pallete Picker is running on port 3000');
