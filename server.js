@@ -41,6 +41,16 @@ app.get('/api/v1/projects/:projectid/palletes/:palleteid', (request, response) =
   }
 });
 
+app.get('/api/v1/projects/:projectid/palletes/:palleteid/delete', (request, response) => {
+  const project_id = request.params.projectid;
+  const pallete_id = request.params.palleteid;
+  const project = app.locals.projects.find(project => project.id == project_id);
+  const filteredPalletes = project.palletes.filter(pallete => pallete.id != pallete_id);
+
+  app.locals.projects = filteredPalletes;
+  return response.status(201).json(filteredPalletes);
+})
+
 app.post('/api/v1/projects/new', (request, response) => {
   const id = app.locals.projects.length + 1;
   const { palletes, title } = request.body
