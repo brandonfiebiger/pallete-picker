@@ -20,24 +20,33 @@ app.locals.projects = [
 
 app.get('/api/v1/projects', (request, response) => {
   database('projects').select()
-    .then((projects) => {
-      response.status(200).json(projects)
-    })
-    .catch((error) => {
-      response.status(500).json({ error });
-    })
-  // response.status(200).json(app.locals.projects);
+  .then((projects) => {
+    response.status(200).json(projects)
+  })
+  .catch((error) => {
+    response.status(500).json({ error });
+  })
 });
 
-app.get('/api/v1/projects/:id', (request, response) => {
-  const id = request.params.id;
-  const project = app.locals.projects.find(project => project.id == id);
-  if (project) {
-    return response.status(200).json(project);
-  } else {
-    return response.status(404).json({error: 'Sorry that project does not exist.'});
+app.post('/api/v1/projects', (request, response) => {
+  const project = request.body;
+
+  for (let requiredParameter of ['title']) {
+    if (!project[requiredParameter]) {
+      return response
+        .status(422)
+        .send({ error: `Expected format: { title: <String> }. Youre missing a ${requiredParameter} property.`})
+    }
   }
-});
+
+  database('projects').insert(project, 'id')
+    .then(project => {
+      response.status(201).json({ id: project[0] })
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    })
+})
 
 app.get('/api/v1/projects/:projectid/palletes/:palleteid', (request, response) => {
   const projectid = request.params.projectid;
@@ -61,14 +70,6 @@ app.get('/api/v1/projects/:projectid/palletes/:palleteid/delete', (request, resp
   return response.status(201).json(filteredPalletes);
 })
 
-app.post('/api/v1/projects/new', (request, response) => {
-  const id = app.locals.projects.length + 1;
-  const { palletes, title } = request.body
-  const project = {id: id, title: title, palletes: palletes };
-
-  app.locals.projects.push(project);
-  response.status(201).json(project);
-})
 
 // app.delete('/api/v1/projects/delete/:project_id', (request, response) => {
 //   const project_id = request.params.project_id;
