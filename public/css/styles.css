@@ -26,6 +26,20 @@ footer {
   justify-content: space-around;
 }
 
+.unlocked {
+  height: 2rem;
+  width: 2rem;
+  background-image: url("../images/padlock-unlock\ \(1\).png");
+  background-repeat: no-repeat;
+}
+
+.locked {
+  height: 2rem;
+  width: 2rem;
+  background-image: url("../images/padlock.png");
+  background-repeat: no-repeat;
+}
+
 article {
   background: black;
   height: 80vh;

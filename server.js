@@ -1,3 +1,6 @@
+const enviroment = process.env.NODE_ENV || 'development';
+const configuration = require('./knexfile')[enviroment];
+const database = require('knex')(configuration);
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -16,7 +19,14 @@ app.locals.projects = [
 ];
 
 app.get('/api/v1/projects', (request, response) => {
-  response.status(200).json(app.locals.projects);
+  database('projects').select()
+    .then((projects) => {
+      response.status(200).json(projects)
+    })
+    .catch((error) => {
+      response.status(500).json({ error });
+    })
+  // response.status(200).json(app.locals.projects);
 });
 
 app.get('/api/v1/projects/:id', (request, response) => {
@@ -71,6 +81,6 @@ app.post('/api/v1/projects/new', (request, response) => {
 //   // }
 // })
 
-app.listen(3000, () => {
+app.listen(app.get('port'), () => {
   console.log('Pallete Picker is running on port 3000');
 });
