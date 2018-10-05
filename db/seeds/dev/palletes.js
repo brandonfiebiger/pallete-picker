@@ -1,7 +1,12 @@
 const projectData = [{
   title: 'Yamon',
   id: 2,
-}]
+},
+{
+  title: 'pants',
+  id: 3
+}
+]
 
 const createProject = (knex, project) => {
   return knex('projects').insert({
