@@ -1,9 +1,5 @@
-// window.onload = funcRef;
-// window.onload(() => {
-  
-//   generateFiveHexCodes()
-//   setRandomColorsToDom()
-// })    
+
+
 
 const lockColor = (e) => {
   $(e.target).parent().toggleClass('locked-color');
@@ -39,7 +35,9 @@ const generateFiveHexCodes = () => {
   previousColors = colors;
   return colors;
 }
-      
+
+
+
 window.onkeydown = function keyFunctions(e) {
   switch (e.keyCode) {
     case 32:
@@ -57,12 +55,14 @@ const setRandomColorsToDom = (colors) => {
     })
     if ($(`color${i}`).hasClass('locked-color')) {
       console.log('hello')
-    $(`.color${i}`).html(`<div class="locked lock"></div>${colors[i]}`);
+      $(`.color${i}`).html(`<div class="locked lock"></div>${colors[i]}`);
     } else {
       $(`.color${i}`).html(`<div class="unlocked lock"></div>${colors[i]}`);
     }
   }
 }
+
+
 
 const addProject = (e) => {
   e.preventDefault();
@@ -78,6 +78,11 @@ const addProject = (e) => {
     .then(data => console.log(data))
     .catch(error => console.log(error));
 }
+
+$( document ).ready(function() {
+  let colors = generateFiveHexCodes();
+  setRandomColorsToDom(colors);
+});
 
 $('.projects').on('click', '.project-button', addProject);
 
