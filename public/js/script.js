@@ -4,14 +4,11 @@ const projectsAndPalletes = {
   selectedProject: 0
 }
 
-
 const lockColor = (e) => {
   $(e.target).parent().toggleClass('locked-color');
   $(e.target).toggleClass('unlocked');
   $(e.target).toggleClass('locked');
-  console.log(e.target)
 }
-
 
 $('.colors').on('click', '.lock', lockColor)
 
@@ -51,22 +48,18 @@ window.onkeydown = function keyFunctions(e) {
 }
 
 const setRandomColorsToDom = (colors) => {
-  console.log(colors)
   for (let i = 0; i < colors.length + 1; i++) {
     $(`.color${i}`).css('background-color', `${colors[i]}`);
     $(`.color${i}`).text(() => {
       return `${colors[i]}`
     })
     if ($(`color${i}`).hasClass('locked-color')) {
-      console.log('hello')
       $(`.color${i}`).html(`<div class="locked lock"></div>${colors[i]}`);
     } else {
       $(`.color${i}`).html(`<div class="unlocked lock"></div>${colors[i]}`);
     }
   }
 }
-
-
 
 const addProject = (e) => {
   e.preventDefault();
@@ -98,9 +91,7 @@ const getPalletesFromDataBase = () => {
 }
 
 const displayProjects = () => {
-  console.log('hello')
   projectsAndPalletes.projects.forEach(project => {
-    console.log(project)
     $('.projects').prepend(`<li class="project" value="${project.id}">${project.title}</li>`);
   })
 }
@@ -112,7 +103,6 @@ $( document ).ready(() => {
   getPalletesFromDataBase();
   // displayProjects();
 });
-
 
 $('.projects').on('click', '.project-button', addProject);
 
