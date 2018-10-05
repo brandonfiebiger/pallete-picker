@@ -1,4 +1,8 @@
-
+const projectsAndPalletes = {
+  projects: [],
+  palletes: [],
+  selectedProject: 0
+}
 
 
 const lockColor = (e) => {
@@ -79,10 +83,40 @@ const addProject = (e) => {
     .catch(error => console.log(error));
 }
 
-$( document ).ready(function() {
+const getProjectsFromDataBase = () => {
+  fetch('/api/v1/projects')
+    .then(response => response.json())
+    .then(projects => projectsAndPalletes.projects = projects)
+    .catch(error => console.log(error));
+    displayProjects();
+};
+
+const getPalletesFromDataBase = () => {
+  fetch('/api/v1/palletes')
+    .then(response => response.json())
+    .then(palletes => projectsAndPalletes.palletes = palletes)
+}
+
+const displayProjects = () => {
+  console.log('hello')
+  projectsAndPalletes.projects.forEach(project => {
+    console.log(project)
+    $('.projects').prepend(`<li class="project" value="${project.id}">${project.title}</li>`);
+  })
+}
+
+$( document ).ready(() => {
   let colors = generateFiveHexCodes();
   setRandomColorsToDom(colors);
+  getProjectsFromDataBase();
+  getPalletesFromDataBase();
+  // displayProjects();
 });
 
+
 $('.projects').on('click', '.project-button', addProject);
+
+$('.projects').on('click', '.project', (e) => {
+  projectsAndPalletes.selectedProject = e.target.value;
+})
 
