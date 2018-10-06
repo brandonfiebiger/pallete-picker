@@ -1,7 +1,8 @@
 const projectsAndPalletes = {
   projects: [],
   palletes: [],
-  selectedProject: 0
+  selectedProject: 0,
+  selectedProjectsPalletes: []
 }
 
 
@@ -88,33 +89,34 @@ const addProject = (e) => {
     })
     .catch(error => console.log(error));
   $('.project-name-input').val('');
-
 }
 
 const addPallete = (e) => {
   e.preventDefault()
-  console.log('hello world')
   if(projectsAndPalletes.selectedProject) {
+    let palleteToAdd = {
+      title: $('.pallete-name-input').val(),
+      color1: previousColors[0],
+      color2: previousColors[1],
+      color3: previousColors[2],
+      color4: previousColors[3],
+      color5: previousColors[4],
+      project_id: projectsAndPalletes.selectedProject
+    }
     fetch('/api/v1/palletes', {
       method: 'POST',
-      body: JSON.stringify({
-        title: $('.pallete-name-input').val(),
-        color1: previousColors[0],
-        color2: previousColors[1],
-        color3: previousColors[2],
-        color4: previousColors[3],
-        color5: previousColors[4],
-        project_id: projectsAndPalletes.selectedProject
-      }),
+      body: JSON.stringify(palleteToAdd),
       headers: {
         'Content-Type': 'application/json'
       }
     })
     .then(response => response.json())
     .then(data => console.log(data))
+    .then(projectsAndPalletes.palletes.push(palleteToAdd))
     .catch(error => console.log(error))
   }
   $('.pallete-name-input').val('');
+  displayPalletes(projectsAndPalletes.selectedProject);
 }
 
 const getProjectsFromDataBase = () => {
@@ -139,6 +141,25 @@ const displayProjects = () => {
   })
 }
 
+const displayPalletes = (projectId) => {
+  $('.palletes').html(`
+  <form>
+        <input class="pallete-name-input" type="text" placeholer="Pallete Name"/>
+        <button class="pallete-button">Save Pallete!</button>
+      </form>
+      `)
+  projectsAndPalletes.palletes.forEach(pallete => {
+    if (pallete.project_id === projectId) {
+      $('.palletes').prepend(`<li class="pallete" value=${pallete.id}>${pallete.title}</li>`)
+    }
+  })
+}
+
+const selectProject = (e) => {
+  projectsAndPalletes.selectedProject = e.target.value;
+  displayPalletes(e.target.value)
+}
+
 $(document).ready(() => {
   let colors = generateFiveHexCodes();
   setRandomColorsToDom(colors);
@@ -149,9 +170,7 @@ $(document).ready(() => {
 
 $('.projects').on('click', '.project-button', addProject);
 
-$('.projects').on('click', '.project', (e) => {
-  projectsAndPalletes.selectedProject = e.target.value;
-});
+$('.projects').on('click', '.project', (e) => selectProject(e));
 
 $('.palletes').on('click', '.pallete-button', addPallete);
 
