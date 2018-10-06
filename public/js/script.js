@@ -2,7 +2,8 @@ const projectsAndPalletes = {
   projects: [],
   palletes: [],
   selectedProject: 0,
-  selectedProjectsPalletes: []
+  selectedProjectsPalletes: [],
+  selectedProjectTitle: ''
 }
 
 
@@ -10,7 +11,6 @@ const lockColor = (e) => {
   $(e.target).parent().toggleClass('locked-color');
   $(e.target).toggleClass('unlocked');
   $(e.target).toggleClass('locked');
-  console.log(e.target)
 }
 
 
@@ -79,7 +79,7 @@ const addProject = (e) => {
     },
   })
     .then(response => response.json())
-    .then(data => console.log(data))
+    .then(data => projectsAndPalletes.selectedProject = data.id)
     .then(() => {
       $('.projects').html(` <form>
       <input class="project-name-input" type="text"/>
@@ -116,7 +116,7 @@ const addPallete = (e) => {
     .catch(error => console.log(error))
   }
   $('.pallete-name-input').val('');
-  displayPalletes(projectsAndPalletes.selectedProject);
+  displayPalletes(projectsAndPalletes.selectedProject, projectsAndPalletes.selectedProjectTitle);
 }
 
 const getProjectsFromDataBase = () => {
@@ -137,27 +137,44 @@ const getPalletesFromDataBase = () => {
 
 const displayProjects = () => {
   projectsAndPalletes.projects.forEach(project => {
-    $('.projects').prepend(`<li class="project" value="${project.id}">${project.title}</li>`);
+    $('.project-section').prepend(`<li class="project" value="${project.id}">${project.title}</li>`);
   })
 }
 
-const displayPalletes = (projectId) => {
+const displayPalletes = (projectId, projectTitle) => {
   $('.palletes').html(`
+  <h2>${projectTitle}</h2>
+  <ul class="pallete-list"></ul>
   <form>
-        <input class="pallete-name-input" type="text" placeholer="Pallete Name"/>
-        <button class="pallete-button">Save Pallete!</button>
-      </form>
+    <input class="pallete-name-input" type="text" placeholer="Pallete Name"/>
+    <button class="pallete-button">Save Pallete!</button>
+  </form>
       `)
   projectsAndPalletes.palletes.forEach(pallete => {
     if (pallete.project_id === projectId) {
-      $('.palletes').prepend(`<li class="pallete" value=${pallete.id}>${pallete.title}</li>`)
+      $('.pallete-list').prepend(`
+      <li class="pallete" value=${pallete.id}>${pallete.title}
+        <div palletes-colors>
+          <div class="pallete-color1">${pallete.color1}</div>
+          <div class="pallete-color2">${pallete.color2}</div>
+          <div class="pallete-color3">${pallete.color3}</div>
+          <div class="pallete-color4">${pallete.color4}</div>
+          <div class="pallete-color5">${pallete.color5}</div>
+        </div>
+      </li>`)
+    }
+    for(let i = 1; i < 5; i++) {
+      $(`.pallete-color${i}`).css('background-color', $(`.pallete-color${i}`).text())
     }
   })
 }
 
 const selectProject = (e) => {
   projectsAndPalletes.selectedProject = e.target.value;
-  displayPalletes(e.target.value)
+  const project = projectsAndPalletes.projects.find(project => project.id == projectsAndPalletes.selectedProject);
+  $('.palletes').addClass('open')
+  projectsAndPalletes.selectedProjectTitle = project.title;
+  displayPalletes(e.target.value, project.title);
 }
 
 $(document).ready(() => {
