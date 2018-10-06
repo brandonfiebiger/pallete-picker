@@ -1,3 +1,8 @@
+body {
+  background: black;
+  color: #f9f9f9
+}
+
 main {
   display: flex;
   flex-direction: row;
@@ -13,13 +18,23 @@ footer {
 
 .projects {
   width: 20vw;
-  background: red;
+  background: black;
+  color: #f9f9f9;
   height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.project-section {
+  overflow: scroll;
+  margin: 0;
+  padding: 0;
 }
 
 .colors {
   width: 60vw;
-  background: yellow;
+  background: black;
   height: 80vh;
   display: flex;
   flex-direction: column;
@@ -42,11 +57,49 @@ footer {
 article {
   background: black;
   height: 80vh;
-  width: 60vw;
+  width: 79vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .palletes {
   width: 20vw;
-  background: blue;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: black;
+  color: #f9f9f9;
   height: 80vh;
+  position: absolute;
+  left: 90rem;
+  -webkit-transition-property: left;
+  -webkit-transition-duration: .2s;
+  -webkit-transition-delay: .2s;
+  transition-timing-function: linear;
 }
+
+.pallete-list {
+  height: 35rem;
+  padding: 0;
+  margin: 0;
+  overflow: scroll;
+}
+
+.pallete {
+  list-style-type: none;
+  height: 8rem;
+  border: 1px solid #f9f9f9;
+}
+
+li {
+  list-style-type: none;
+  height: 4rem;
+  border: 1px solid #f9f9f9;
+}
+
+.open {
+  left: 80vw;
+}
+
+
