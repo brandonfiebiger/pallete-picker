@@ -22,8 +22,7 @@ footer {
   background: yellow;
   height: 80vh;
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  flex-direction: column;
 }
 
 .unlocked {
@@ -43,7 +42,7 @@ footer {
 article {
   background: black;
   height: 80vh;
-  width: 10rem;
+  width: 60vw;
 }
 
 .palletes {
