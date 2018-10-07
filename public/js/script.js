@@ -195,7 +195,13 @@ const deletePallete = (e) => {
   const filteredPalletes = projectsAndPalletes.palletes.filter(pallete => pallete.id != e.target.id);
   projectsAndPalletes.palletes = filteredPalletes;
   displayPalletes(projectsAndPalletes.selectedProject, projectsAndPalletes.selectedProjectTitle);
-}
+  fetch(`/api/v1/palletes/${e.target.id}`, {
+    method: 'DELETE'
+  })
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.log(error));
+};
 
 const selectProject = (e) => {
   projectsAndPalletes.selectedProject = e.target.value;
