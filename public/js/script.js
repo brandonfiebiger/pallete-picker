@@ -43,11 +43,15 @@ const generateFiveHexCodes = () => {
 
 
 
-window.onkeydown = function keyFunctions(e) {
+window.onkeydown = (e) => {
   switch (e.keyCode) {
     case 32:
-    let colors = generateFiveHexCodes();
-    setRandomColorsToDom(colors);
+    if ($('.project-name-input').val() || $('.pallete-name-input').val()) {
+      return
+    } else {
+      let colors = generateFiveHexCodes();
+      setRandomColorsToDom(colors);
+    }
   }
 }
 
@@ -81,14 +85,19 @@ const addProject = (e) => {
     .then(response => response.json())
     .then(data => projectsAndPalletes.selectedProject = data.id)
     .then(() => {
-      $('.projects').html(` <form>
-      <input class="project-name-input" type="text"/>
-      <button class="project-button">Add a project!</button>
-    </form>`)
+      $('.projects').html(` 
+      <h2>Your Projects</h2>
+      <ul class="project-section"></ul>
+      <form>
+        <input class="project-name-input" type="text"/>
+        <button class="project-button">Add a project!</button>
+      </form>`
+      )
       getProjectsFromDataBase()
     })
     .catch(error => console.log(error));
   $('.project-name-input').val('');
+  displayProjects();
 }
 
 const addPallete = (e) => {
@@ -154,17 +163,26 @@ const displayPalletes = (projectId, projectTitle) => {
     if (pallete.project_id === projectId) {
       $('.pallete-list').prepend(`
       <li class="pallete" value=${pallete.id}>${pallete.title}
-        <div palletes-colors>
-          <div class="pallete-color1">${pallete.color1}</div>
-          <div class="pallete-color2">${pallete.color2}</div>
-          <div class="pallete-color3">${pallete.color3}</div>
-          <div class="pallete-color4">${pallete.color4}</div>
-          <div class="pallete-color5">${pallete.color5}</div>
+        <img class="garbage" src="../images/trash.png" />
+        <div class="palletes-colors">
+          <div class="pallete-color" style="background-color:${pallete.color1}">
+            <div>${pallete.color1}</div>
+          </div>
+          <div class="pallete-color" style="background-color:${pallete.color2}">
+            <div>${pallete.color2}</div>
+          </div>
+          <div class="pallete-color" style="background-color:${pallete.color3}">
+            <div>${pallete.color3}</div>
+          </div>
+          <div class="pallete-color" style="background-color:${pallete.color4}">
+            <div>${pallete.color4}</div>
+          </div>
+          <div class="pallete-color" style="background-color:${pallete.color5}">
+            <div>${pallete.color5}</div>
+          </div>
         </div>
-      </li>`)
-    }
-    for(let i = 1; i < 5; i++) {
-      $(`.pallete-color${i}`).css('background-color', $(`.pallete-color${i}`).text())
+      </li>`
+      )
     }
   })
 }
