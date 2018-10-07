@@ -167,8 +167,8 @@ const displayPalletes = (projectId, projectTitle) => {
   <h2>${projectTitle}</h2>
   <ul class="pallete-list"></ul>
   <form>
-    <input class="pallete-name-input" type="text" placeholer="Pallete Name"/>
-    <button class="pallete-button">Save Pallete!</button>
+    <input class="pallete-name-input" type="text" placeholder="Add A Pallete"/>
+    <button class="pallete-button">+</button>
   </form>
       `)
   projectsAndPalletes.palletes.forEach(pallete => {
@@ -246,3 +246,7 @@ $('.projects').on('click', '.project', selectProject);
 
 $('.palletes').on('click', '.pallete-button', addPallete);
 
+$('.generate-button').on('click', () => {
+  let colors = generateFiveHexCodes();
+  setRandomColorsToDom(colors);
+})
