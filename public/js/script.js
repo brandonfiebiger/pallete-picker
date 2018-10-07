@@ -162,8 +162,8 @@ const displayPalletes = (projectId, projectTitle) => {
   projectsAndPalletes.palletes.forEach(pallete => {
     if (pallete.project_id === projectId) {
       $('.pallete-list').prepend(`
-      <li class="pallete" value=${pallete.id}>
-        <div class="pallete-header">
+      <li class="pallete" id="${pallete.id}">
+        <div class="pallete-header" id="${pallete.id}">
           ${pallete.title}
           <img class="garbage" src="../images/trash.png" id="${pallete.id}"/>
         </div>
@@ -203,6 +203,12 @@ const deletePallete = (e) => {
   .catch(error => console.log(error));
 };
 
+const selectPallete = (e) => {
+  const selectedPallete = projectsAndPalletes.palletes.find(pallete => pallete.id == e.target.id);
+  const selectedColors = [selectedPallete.color1, selectedPallete.color2, selectedPallete.color3, selectedPallete.color4, selectedPallete.color5];
+  setRandomColorsToDom(selectedColors);
+}
+
 const selectProject = (e) => {
   projectsAndPalletes.selectedProject = e.target.value;
   const project = projectsAndPalletes.projects.find(project => project.id == projectsAndPalletes.selectedProject);
@@ -217,6 +223,8 @@ $(document).ready(() => {
   getProjectsFromDataBase();
   getPalletesFromDataBase();
 });
+
+$('.palletes').on('click', '.pallete-header', selectPallete)
 
 $('.palletes').on('click', '.garbage', deletePallete);
 
