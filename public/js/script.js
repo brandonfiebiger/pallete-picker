@@ -3,7 +3,9 @@ const projectsAndPalletes = {
   palletes: [],
   selectedProject: 0,
   selectedProjectsPalletes: [],
-  selectedProjectTitle: ''
+  selectedProjectTitle: '',
+  selectedNav: 'colors',
+  navChoices: ['colors', 'palletes', 'projects']
 }
 
 
@@ -229,12 +231,30 @@ const selectProject = (e) => {
   displayPalletes(e.target.value, project.title);
 }
 
+const selectNav = (e) => {
+  projectsAndPalletes.selectedNav = e.target.id;
+  delegateNav(e.target.id);
+}
+
+const delegateNav = (selectedNav) => {
+  projectsAndPalletes.navChoices.forEach(navChoice => {
+    if (navChoice === selectedNav) {
+      $(`.${selectedNav}`).addClass('visible');
+    } else {
+      $(`.${navChoice}`).removeClass('visible');
+    }
+  })
+}
+
 $(document).ready(() => {
   let colors = generateFiveHexCodes();
   setRandomColorsToDom(colors);
   getProjectsFromDataBase();
   getPalletesFromDataBase();
+  delegateNav(projectsAndPalletes.selectedNav);
 });
+
+$('nav').on('click', selectNav)
 
 $('.palletes').on('click', '.pallete-header', selectPallete)
 
