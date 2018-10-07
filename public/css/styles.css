@@ -217,6 +217,12 @@ input::placeholder {
   background: black;
   color: #f9f9f9;
   cursor: pointer;
+  text-decoration: underline;
+}
+
+.generate-button:active {
+  background: #f9f9f9;
+  color: black;
 }
 
 @media screen and (max-width: 950px) {
@@ -225,13 +231,18 @@ input::placeholder {
     width: 0;
   }
 
+  .pallete-list {
+    width: 100vw;
+  }
+
   .projects {
     visibility: hidden;
     width: 0;
   }
 
   .colors {
-    width: 100vw;
+    width: 0;
+    visibility: hidden;
   }
 
   article { 
@@ -244,5 +255,10 @@ input::placeholder {
 
   nav {
     visibility: visible;
+  }
+
+  .visible {
+    visibility: visible;
+    width: 100vw;
   }
 }
