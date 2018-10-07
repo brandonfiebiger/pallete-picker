@@ -225,6 +225,10 @@ input::placeholder {
   color: black;
 }
 
+.hidden {
+  visibility: hidden;
+}
+
 @media screen and (max-width: 950px) {
   .palletes {
     visibility: hidden;

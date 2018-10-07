@@ -226,6 +226,7 @@ const selectPallete = (e) => {
 const selectProject = (e) => {
   projectsAndPalletes.selectedProject = e.target.value;
   const project = projectsAndPalletes.projects.find(project => project.id == projectsAndPalletes.selectedProject);
+  $('.palletes-nav').removeClass('hidden');
   $('.palletes').addClass('open')
   projectsAndPalletes.selectedProjectTitle = project.title;
   displayPalletes(e.target.value, project.title);
