@@ -162,8 +162,11 @@ const displayPalletes = (projectId, projectTitle) => {
   projectsAndPalletes.palletes.forEach(pallete => {
     if (pallete.project_id === projectId) {
       $('.pallete-list').prepend(`
-      <li class="pallete" value=${pallete.id}>${pallete.title}
-        <img class="garbage" src="../images/trash.png" />
+      <li class="pallete" value=${pallete.id}>
+        <div class="pallete-header">
+          ${pallete.title}
+          <img class="garbage" src="../images/trash.png" id="${pallete.id}"/>
+        </div>
         <div class="palletes-colors">
           <div class="pallete-color" style="background-color:${pallete.color1}">
             <div>${pallete.color1}</div>
@@ -187,6 +190,13 @@ const displayPalletes = (projectId, projectTitle) => {
   })
 }
 
+const deletePallete = (e) => {
+  console.log(e.target.id);
+  const filteredPalletes = projectsAndPalletes.palletes.filter(pallete => pallete.id != e.target.id);
+  projectsAndPalletes.palletes = filteredPalletes;
+  displayPalletes(projectsAndPalletes.selectedProject, projectsAndPalletes.selectedProjectTitle);
+}
+
 const selectProject = (e) => {
   projectsAndPalletes.selectedProject = e.target.value;
   const project = projectsAndPalletes.projects.find(project => project.id == projectsAndPalletes.selectedProject);
@@ -202,10 +212,11 @@ $(document).ready(() => {
   getPalletesFromDataBase();
 });
 
+$('.palletes').on('click', '.garbage', deletePallete);
 
 $('.projects').on('click', '.project-button', addProject);
 
-$('.projects').on('click', '.project', (e) => selectProject(e));
+$('.projects').on('click', '.project', selectProject);
 
 $('.palletes').on('click', '.pallete-button', addPallete);
 
