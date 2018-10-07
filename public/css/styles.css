@@ -115,9 +115,20 @@ li {
   border: 3px solid #f9f9f9;
 }
 
+.pallete-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+
 .open {
   /* left: 80vw; */
   visibility: visible;
+}
+
+.garbage {
+  cursor: pointer;
 }
 
 
