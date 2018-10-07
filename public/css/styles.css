@@ -115,9 +115,29 @@ li {
   border: 3px solid #f9f9f9;
 }
 
+.pallete-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+
 .open {
   /* left: 80vw; */
   visibility: visible;
 }
 
+.garbage {
+  cursor: pointer;
+}
 
+.project {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  text-decoration: underline;
+}

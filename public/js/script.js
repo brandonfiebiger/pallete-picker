@@ -103,7 +103,7 @@ const addProject = (e) => {
 const addPallete = (e) => {
   e.preventDefault()
   if(projectsAndPalletes.selectedProject) {
-    let palleteToAdd = {
+    let palleteToAddToDataBase = {
       title: $('.pallete-name-input').val(),
       color1: previousColors[0],
       color2: previousColors[1],
@@ -112,20 +112,32 @@ const addPallete = (e) => {
       color5: previousColors[4],
       project_id: projectsAndPalletes.selectedProject
     }
+    let palleteToAddToDOM = {
+      title: $('.pallete-name-input').val(),
+      color1: previousColors[0],
+      color2: previousColors[1],
+      color3: previousColors[2],
+      color4: previousColors[3],
+      color5: previousColors[4],
+      project_id: projectsAndPalletes.selectedProject,
+      id: 0
+    }
     fetch('/api/v1/palletes', {
       method: 'POST',
-      body: JSON.stringify(palleteToAdd),
+      body: JSON.stringify(palleteToAddToDataBase),
       headers: {
         'Content-Type': 'application/json'
       }
     })
     .then(response => response.json())
-    .then(data => console.log(data))
-    .then(projectsAndPalletes.palletes.push(palleteToAdd))
+    .then(data => {
+      palleteToAddToDOM.id = data.id;
+      projectsAndPalletes.palletes.push(palleteToAddToDOM);
+      displayPalletes(projectsAndPalletes.selectedProject, projectsAndPalletes.selectedProjectTitle);
+    })
     .catch(error => console.log(error))
   }
   $('.pallete-name-input').val('');
-  displayPalletes(projectsAndPalletes.selectedProject, projectsAndPalletes.selectedProjectTitle);
 }
 
 const getProjectsFromDataBase = () => {
@@ -162,8 +174,11 @@ const displayPalletes = (projectId, projectTitle) => {
   projectsAndPalletes.palletes.forEach(pallete => {
     if (pallete.project_id === projectId) {
       $('.pallete-list').prepend(`
-      <li class="pallete" value=${pallete.id}>${pallete.title}
-        <img class="garbage" src="../images/trash.png" />
+      <li class="pallete" id="${pallete.id}">
+        <div class="pallete-header" id="${pallete.id}">
+          ${pallete.title}
+          <img class="garbage" src="../images/trash.png" id="${pallete.id}"/>
+        </div>
         <div class="palletes-colors">
           <div class="pallete-color" style="background-color:${pallete.color1}">
             <div>${pallete.color1}</div>
@@ -187,6 +202,25 @@ const displayPalletes = (projectId, projectTitle) => {
   })
 }
 
+const deletePallete = (e) => {
+  console.log(e.target.id);
+  const filteredPalletes = projectsAndPalletes.palletes.filter(pallete => pallete.id != e.target.id);
+  projectsAndPalletes.palletes = filteredPalletes;
+  displayPalletes(projectsAndPalletes.selectedProject, projectsAndPalletes.selectedProjectTitle);
+  fetch(`/api/v1/palletes/${e.target.id}`, {
+    method: 'DELETE'
+  })
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.log(error));
+};
+
+const selectPallete = (e) => {
+  const selectedPallete = projectsAndPalletes.palletes.find(pallete => pallete.id == e.target.id);
+  const selectedColors = [selectedPallete.color1, selectedPallete.color2, selectedPallete.color3, selectedPallete.color4, selectedPallete.color5];
+  setRandomColorsToDom(selectedColors);
+}
+
 const selectProject = (e) => {
   projectsAndPalletes.selectedProject = e.target.value;
   const project = projectsAndPalletes.projects.find(project => project.id == projectsAndPalletes.selectedProject);
@@ -202,10 +236,13 @@ $(document).ready(() => {
   getPalletesFromDataBase();
 });
 
+$('.palletes').on('click', '.pallete-header', selectPallete)
+
+$('.palletes').on('click', '.garbage', deletePallete);
 
 $('.projects').on('click', '.project-button', addProject);
 
-$('.projects').on('click', '.project', (e) => selectProject(e));
+$('.projects').on('click', '.project', selectProject);
 
 $('.palletes').on('click', '.pallete-button', addPallete);
 
