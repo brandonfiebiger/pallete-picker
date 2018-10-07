@@ -103,7 +103,7 @@ const addProject = (e) => {
 const addPallete = (e) => {
   e.preventDefault()
   if(projectsAndPalletes.selectedProject) {
-    let palleteToAdd = {
+    let palleteToAddToDataBase = {
       title: $('.pallete-name-input').val(),
       color1: previousColors[0],
       color2: previousColors[1],
@@ -112,20 +112,32 @@ const addPallete = (e) => {
       color5: previousColors[4],
       project_id: projectsAndPalletes.selectedProject
     }
+    let palleteToAddToDOM = {
+      title: $('.pallete-name-input').val(),
+      color1: previousColors[0],
+      color2: previousColors[1],
+      color3: previousColors[2],
+      color4: previousColors[3],
+      color5: previousColors[4],
+      project_id: projectsAndPalletes.selectedProject,
+      id: 0
+    }
     fetch('/api/v1/palletes', {
       method: 'POST',
-      body: JSON.stringify(palleteToAdd),
+      body: JSON.stringify(palleteToAddToDataBase),
       headers: {
         'Content-Type': 'application/json'
       }
     })
     .then(response => response.json())
-    .then(data => console.log(data))
-    .then(projectsAndPalletes.palletes.push(palleteToAdd))
+    .then(data => {
+      palleteToAddToDOM.id = data.id;
+      projectsAndPalletes.palletes.push(palleteToAddToDOM);
+      displayPalletes(projectsAndPalletes.selectedProject, projectsAndPalletes.selectedProjectTitle);
+    })
     .catch(error => console.log(error))
   }
   $('.pallete-name-input').val('');
-  displayPalletes(projectsAndPalletes.selectedProject, projectsAndPalletes.selectedProjectTitle);
 }
 
 const getProjectsFromDataBase = () => {
