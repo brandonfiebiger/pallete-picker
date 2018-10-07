@@ -8,6 +8,7 @@
   <link rel="stylesheet" type="text/css" media="screen" href="css/styles.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="path/to/your/jquery.min.js"><\/script>')</script>
+  <link href="https://fonts.googleapis.com/css?family=K2D" rel="stylesheet">
 </head>
 <body>
   <header>
@@ -16,6 +17,8 @@
   </header>
   <main>
     <section class="projects">
+      <h2>Your Projects</h2>
+      <ul class="project-section"></ul>
       <form>
         <input class="project-name-input" type="text"/>
         <button class="project-button">Add a project!</button>
@@ -28,12 +31,13 @@
       <article class="color3"></article>
       <article class="color4"></article>
     </section>
-    <section class="palletes">palletes</section>
+    <section class="palletes">
+      <form>
+        <input class="pallete-name-input" type="text" placeholer="Pallete Name"/>
+        <button class="pallete-button">Save Pallete!</button>
+      </form>
+    </section>
   </main>
-  <footer>
-    <input type="text" placeholer="Pallete Name"/>
-    <button>Save Pallete!</button>
-  </footer>
 </body>
 <script src="js/script.js"></script>
 </html>
