@@ -16,17 +16,21 @@
   <header>
     <h1>Pallete Picker</h1>
     <p>Press the spacebar to generate new colors</p>
-    <nav>
+    <nav id="colors">
       <button class="nav-button projects-nav" id="projects">PROJECTS</button>
       <button class="nav-button colors-nav" id="colors">COLORS</button>
       <button class="nav-button palletes-nav hidden" id="palletes">PALLETES</button>
     </nav>
+    <form class="pallete-form hidden">
+      <input class="pallete-name-input ipad" type="text" placeholder="Add a Pallete!"/>
+      <button class="pallete-button ipad-plus-button">+</button>
+    </form>
   </header>
   <main>
     <section class="projects">
       <h2>Your Projects</h2>
       <ul class="project-section"></ul>
-      <form>
+      <form class="project-form">
         <input class="project-name-input" type="text" placeholder="Project Title Here!"/>
         <button class="project-button">+</button>
       </form>
@@ -39,7 +43,7 @@
       <article class="color4"></article>
     </section>
     <section class="palletes">
-      <form>
+      <form class="ipad-hidden-form">
         <input class="pallete-name-input" type="text" placeholer="Pallete Name"/>
         <button class="pallete-button">Save Pallete!</button>
       </form>

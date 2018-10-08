@@ -225,6 +225,22 @@ input::placeholder {
   color: black;
 }
 
+.pallete-form {
+  visibility: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+.ipad {
+  width: 85vw;
+  height: 3rem;
+}
+
+.ipad-plus-button {
+  width: 15vw;
+  height: 3rem;
+}
+
 .hidden {
   visibility: hidden;
 }
@@ -237,6 +253,10 @@ input::placeholder {
 
   .pallete-list {
     width: 100vw;
+  }
+
+  .pallete-form {
+    visibility: visible;
   }
 
   .projects {
@@ -253,6 +273,17 @@ input::placeholder {
     width: 98.5vw;
   }
 
+  .project-name-input {
+    width: 85vw;
+    height: 3rem;
+  }
+
+  .project-button {
+    width: 15vw;
+    height: 3.5rem;
+    font-size: 1.5rem;
+  }
+
   p {
     visibility: hidden;
   }
@@ -264,5 +295,13 @@ input::placeholder {
   .visible {
     visibility: visible;
     width: 100vw;
+  }
+
+  .hidden {
+    visibility: hidden;
+  }
+
+  .ipad-hidden-form {
+    visibility: hidden;
   }
 }

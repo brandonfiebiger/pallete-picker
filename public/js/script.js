@@ -168,7 +168,7 @@ const displayPalletes = (projectId, projectTitle) => {
   $('.palletes').html(`
   <h2>${projectTitle}</h2>
   <ul class="pallete-list"></ul>
-  <form>
+  <form class="ipad-hidden-form">
     <input class="pallete-name-input" type="text" placeholder="Add A Pallete"/>
     <button class="pallete-button">+</button>
   </form>
@@ -221,15 +221,18 @@ const selectPallete = (e) => {
   const selectedPallete = projectsAndPalletes.palletes.find(pallete => pallete.id == e.target.id);
   const selectedColors = [selectedPallete.color1, selectedPallete.color2, selectedPallete.color3, selectedPallete.color4, selectedPallete.color5];
   setRandomColorsToDom(selectedColors);
+  delegateNav('colors');
 }
 
 const selectProject = (e) => {
   projectsAndPalletes.selectedProject = e.target.value;
   const project = projectsAndPalletes.projects.find(project => project.id == projectsAndPalletes.selectedProject);
+  checkToHide();
   $('.palletes-nav').removeClass('hidden');
-  $('.palletes').addClass('open')
+  $('.palletes').addClass('open');
   projectsAndPalletes.selectedProjectTitle = project.title;
   displayPalletes(e.target.value, project.title);
+  delegateNav('palletes');
 }
 
 const selectNav = (e) => {
@@ -244,7 +247,16 @@ const delegateNav = (selectedNav) => {
     } else {
       $(`.${navChoice}`).removeClass('visible');
     }
+    checkToHide();
   })
+}
+
+const checkToHide = () => {
+  if (projectsAndPalletes.selectedNav != 'colors' || !projectsAndPalletes.selectedProject) {
+    $('.pallete-form').addClass('hidden');
+  } else {
+    $('.pallete-form').removeClass('hidden')
+  }
 }
 
 $(document).ready(() => {
@@ -266,6 +278,8 @@ $('.projects').on('click', '.project-button', addProject);
 $('.projects').on('click', '.project', selectProject);
 
 $('.palletes').on('click', '.pallete-button', addPallete);
+
+$('header').on('click', '.pallete-button', addPallete);
 
 $('.generate-button').on('click', () => {
   let colors = generateFiveHexCodes();
