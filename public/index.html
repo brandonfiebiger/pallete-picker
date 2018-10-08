@@ -6,22 +6,33 @@
   <title>Pallete Picker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen" href="css/styles.css" />
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="path/to/your/jquery.min.js"><\/script>')</script>
   <link href="https://fonts.googleapis.com/css?family=K2D" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
   <header>
     <h1>Pallete Picker</h1>
     <p>Press the spacebar to generate new colors</p>
+    <nav id="colors">
+      <button class="nav-button projects-nav" id="projects">PROJECTS</button>
+      <button class="nav-button colors-nav" id="colors">COLORS</button>
+      <button class="nav-button palletes-nav hidden" id="palletes">PALLETES</button>
+    </nav>
+    <form class="pallete-form hidden">
+      <input class="pallete-name-input ipad" type="text" placeholder="Add a Pallete!"/>
+      <button class="pallete-button ipad-plus-button">+</button>
+    </form>
   </header>
   <main>
     <section class="projects">
       <h2>Your Projects</h2>
       <ul class="project-section"></ul>
-      <form>
-        <input class="project-name-input" type="text"/>
-        <button class="project-button">Add a project!</button>
+      <form class="project-form">
+        <input class="project-name-input" type="text" placeholder="Project Title Here!"/>
+        <button class="project-button">+</button>
       </form>
     </section>
     <section class="colors">
@@ -32,12 +43,13 @@
       <article class="color4"></article>
     </section>
     <section class="palletes">
-      <form>
+      <form class="ipad-hidden-form">
         <input class="pallete-name-input" type="text" placeholer="Pallete Name"/>
         <button class="pallete-button">Save Pallete!</button>
       </form>
     </section>
   </main>
+  <button class="generate-button">GENERATE COLORS!</button>
 </body>
 <script src="js/script.js"></script>
 </html>

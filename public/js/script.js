@@ -3,7 +3,9 @@ const projectsAndPalletes = {
   palletes: [],
   selectedProject: 0,
   selectedProjectsPalletes: [],
-  selectedProjectTitle: ''
+  selectedProjectTitle: '',
+  selectedNav: 'colors',
+  navChoices: ['colors', 'palletes', 'projects']
 }
 
 
@@ -166,9 +168,9 @@ const displayPalletes = (projectId, projectTitle) => {
   $('.palletes').html(`
   <h2>${projectTitle}</h2>
   <ul class="pallete-list"></ul>
-  <form>
-    <input class="pallete-name-input" type="text" placeholer="Pallete Name"/>
-    <button class="pallete-button">Save Pallete!</button>
+  <form class="ipad-hidden-form">
+    <input class="pallete-name-input" type="text" placeholder="Add A Pallete"/>
+    <button class="pallete-button">+</button>
   </form>
       `)
   projectsAndPalletes.palletes.forEach(pallete => {
@@ -219,14 +221,42 @@ const selectPallete = (e) => {
   const selectedPallete = projectsAndPalletes.palletes.find(pallete => pallete.id == e.target.id);
   const selectedColors = [selectedPallete.color1, selectedPallete.color2, selectedPallete.color3, selectedPallete.color4, selectedPallete.color5];
   setRandomColorsToDom(selectedColors);
+  delegateNav('colors');
 }
 
 const selectProject = (e) => {
   projectsAndPalletes.selectedProject = e.target.value;
   const project = projectsAndPalletes.projects.find(project => project.id == projectsAndPalletes.selectedProject);
-  $('.palletes').addClass('open')
+  checkToHide();
+  $('.palletes-nav').removeClass('hidden');
+  $('.palletes').addClass('open');
   projectsAndPalletes.selectedProjectTitle = project.title;
   displayPalletes(e.target.value, project.title);
+  delegateNav('palletes');
+}
+
+const selectNav = (e) => {
+  projectsAndPalletes.selectedNav = e.target.id;
+  delegateNav(e.target.id);
+}
+
+const delegateNav = (selectedNav) => {
+  projectsAndPalletes.navChoices.forEach(navChoice => {
+    if (navChoice === selectedNav) {
+      $(`.${selectedNav}`).addClass('visible');
+    } else {
+      $(`.${navChoice}`).removeClass('visible');
+    }
+    checkToHide();
+  })
+}
+
+const checkToHide = () => {
+  if (projectsAndPalletes.selectedNav != 'colors' || !projectsAndPalletes.selectedProject) {
+    $('.pallete-form').addClass('hidden');
+  } else {
+    $('.pallete-form').removeClass('hidden')
+  }
 }
 
 $(document).ready(() => {
@@ -234,7 +264,10 @@ $(document).ready(() => {
   setRandomColorsToDom(colors);
   getProjectsFromDataBase();
   getPalletesFromDataBase();
+  delegateNav(projectsAndPalletes.selectedNav);
 });
+
+$('nav').on('click', selectNav)
 
 $('.palletes').on('click', '.pallete-header', selectPallete)
 
@@ -246,3 +279,9 @@ $('.projects').on('click', '.project', selectProject);
 
 $('.palletes').on('click', '.pallete-button', addPallete);
 
+$('header').on('click', '.pallete-button', addPallete);
+
+$('.generate-button').on('click', () => {
+  let colors = generateFiveHexCodes();
+  setRandomColorsToDom(colors);
+})
